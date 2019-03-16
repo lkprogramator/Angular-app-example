@@ -1,13 +1,12 @@
-import { TestBed, async } from '@angular/core/testing';
-import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
+import {TestBed} from '@angular/core/testing';
+import {HttpClientTestingModule, HttpTestingController} from '@angular/common/http/testing';
 
-import { AppConfig } from './app-config.service';
+import {AppConfig} from './app-config.service';
 
 describe('AppConfigService', () => {
   let service: AppConfig;
   let backend: HttpTestingController;
 
-  // beforeAll
   beforeAll(() => {
 
     TestBed.configureTestingModule({
@@ -15,7 +14,6 @@ describe('AppConfigService', () => {
       providers: [AppConfig]
     });
 
-   // usersService = TestBed.get(AppConfig);
     service = TestBed.get(AppConfig);
     backend = TestBed.get(HttpTestingController);
   });
@@ -24,15 +22,15 @@ describe('AppConfigService', () => {
     expect(service).toBeTruthy();
   });
 
-    it('should load config json', (done) => {
+  it('should load config json', (done) => {
 
-      service.load();
+    service.load();
 
-      backend.expectOne(`assets/config/config.dev.json`);
-      backend.verify();
-     // expect(AppConfig.settings).toEqual(userResponse);
-      done();
-    });
+    backend.expectOne(`assets/config/config.dev.json`);
+    backend.verify();
+    // expect(AppConfig.settings).toEqual(userResponse);
+    done();
+  });
 
 
   it('tests that async / await works', async () => {
