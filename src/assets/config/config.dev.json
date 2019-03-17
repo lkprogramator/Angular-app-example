@@ -1,5 +1,11 @@
 {
   "api": {
-    "url": "http://localhost:3004"
+    "url": "http://localhost:3004",
+    "employees":"/employees",
+    "logger":"/logger"
+  },
+  "ibillboardApi": {
+    "url": "http://ibillboard.com/api",
+    "positions":"/positions"
   }
 }

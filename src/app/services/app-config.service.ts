@@ -31,5 +31,11 @@ export class AppConfig {
 export interface IAppConfig {
   api: {
     url: string;
+    employees: string;
+    logger: string;
+  };
+  ibillboardApi: {
+    url: string;
+    positions: string;
   };
 }

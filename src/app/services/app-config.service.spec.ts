@@ -7,7 +7,7 @@ describe('AppConfigService', () => {
   let service: AppConfig;
   let backend: HttpTestingController;
 
-  beforeAll(() => {
+  beforeEach(() => {
 
     TestBed.configureTestingModule({
       imports: [HttpClientTestingModule],
