@@ -19,6 +19,11 @@ describe('IbillboardService', () => {
     'ibillboardApi': {
       'url': 'http://ibillboard.com/api',
       'positions': '/positions'
+    },
+    'logging': {
+      'logger': true,
+      'toConsole': true,
+      'toApi': false
     }};
 
   beforeEach(() => {

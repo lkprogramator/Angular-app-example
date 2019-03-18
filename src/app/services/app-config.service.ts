@@ -38,4 +38,9 @@ export interface IAppConfig {
     url: string;
     positions: string;
   };
+  logging: {
+    logger: boolean;
+    toConsole: boolean;
+    toApi: boolean;
+  };
 }

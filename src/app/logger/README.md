@@ -4,7 +4,7 @@
 Practical Log service
 
 ### Usage
-  1) import { LogService, LogLevel, LogEntry } from './log.service';
+  1) import { LogService } from './logger/services/log.service';
   2) constructor(private logger: LogService)
   3) values of all types (string, boolean, number, json, object)
 

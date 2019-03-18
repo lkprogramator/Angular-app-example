@@ -9,6 +9,7 @@ import {environment} from '../../../environments/environment';
   providedIn: 'root'
 })
 export class LogService {
+
   constructor(private publishersService: LogPublisherService) {
     this.publishers = this.publishersService.publishers;
   }
