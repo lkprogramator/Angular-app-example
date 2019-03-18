@@ -4,6 +4,7 @@ import {HttpClientModule, HttpClient} from '@angular/common/http';
 
 import {APP_INITIALIZER} from '@angular/core';
 import {AppConfig} from './services/app-config.service';
+import {LoggerModule} from './logger/logger.module';
 
 import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
@@ -19,7 +20,8 @@ export function initializeApp(appConfig: AppConfig) {
   imports: [
     BrowserModule,
     AppRoutingModule,
-    HttpClientModule
+    HttpClientModule,
+    LoggerModule
   ],
   providers: [
     HttpClient,
