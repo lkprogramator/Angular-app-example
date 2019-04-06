@@ -1,0 +1,60 @@
+
+span[class^="icon"] {
+  background-size: contain;
+  cursor: pointer;
+  display: block;
+  height: 24px;
+  width: 24px;
+}
+span.icon-add-user {
+ background: url(../../../assets/img/add_person.svg) no-repeat center center;
+  height: 34px;
+  width: 34px;
+}
+
+span.icon-delete {
+ background: url(../../../assets/img/garbage.svg) no-repeat center center;
+}
+
+span.icon-edit {
+ background: url(../../../assets/img/writing.svg) no-repeat center center;
+}
+
+span.icon-save {
+ background: url(../../../assets/img/save.svg) no-repeat center center;
+}
+
+span.icon-calendar {
+ background: url(../../../assets/img/calendar.svg) no-repeat center center;
+}
+
+.toggle-label-switch .toggle-trigger:checked  ~ .toggle-edit{
+  background-color: #80bdff;
+}
+
+#newEmployee input.ng-dirty.ng-invalid,
+#employees input.ng-dirty.ng-invalid {
+  border-color: #dc3545;
+}
+
+#newEmployee input.ng-dirty.ng-valid,
+#employees input.ng-dirty.ng-valid {
+  border-color: #28a745;
+}
+
+div#employees tbody tr td input:disabled.form-control.input-disabled-plaintext {
+  display: block;
+  width: 100%;
+  padding-top: .375rem;
+  padding-bottom: .375rem;
+  margin-bottom: 0;
+  line-height: 1.5;
+  color: #212529;
+  background-color: transparent;
+  border: solid transparent;
+  border-width: 1px 0;
+}
+
+
+
+

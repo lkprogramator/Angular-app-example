@@ -1,0 +1,23 @@
+
+<!--div id="toast-container" class="toast-top-right" *ngFor="let item of notifications">
+  <div class="toast {{cssClass(item) }}" aria-live="polite" style="display: block;">
+    <button type="button" class="toast-close-button" role="button" (click)="removeNotification(item)">×</button>
+    <div class="toast-message">
+      {{item.message}}
+    </div>
+  </div>
+</div-->
+
+
+<div id="toast-container" class="toast-top-right" *ngFor="let item of notifications">
+  <div class="toast-note alert alert-{{item.type }} border border-{{item.type }}" aria-live="polite" style="display: block;">
+    <!--button type="button" class="toast-close-button" role="button" (click)="removeNotification(item)">X</button-->
+    <button type="button" class="close" (click)="removeNotification(item)" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+    <div class="toast-message">
+      {{item.message}}
+    </div>
+  </div>
+</div>
+

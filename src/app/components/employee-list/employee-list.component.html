@@ -1,0 +1,180 @@
+<section class="employee-list">
+
+  <div id="newEmployeeSection">
+    <div class="row">
+
+      <div class="col-11 col-md-10">
+        <div *ngIf="showNewEmployeeForm">
+
+          <form id="newEmployee" class="my-2 my-md-0" [formGroup]="newEmployeeForm" novalidate>
+            <div class="form-row">
+              <div class="col-6">
+                <div class="form-group">
+                  <label class=" " for="newEmployeeName">Name</label>
+                  <input type="text" class="form-control" id="newEmployeeName" formControlName="name"
+                         placeholder="Name" aria-label="Name"
+                         [ngClass]="{ 'is-invalid': newEmployeeFormControls.name.invalid && (newEmployeeFormControls.name.dirty || newEmployeeFormControls.name.touched) }">
+
+                  <div
+                    *ngIf="newEmployeeFormControls.name.invalid && (newEmployeeFormControls.name.dirty || newEmployeeFormControls.name.touched)"
+                    class="alert alert-warning">
+                    <div *ngIf="newEmployeeFormControls.name.errors.required">Name is required</div>
+                    <div *ngIf="newEmployeeFormControls.name.errors.pattern">Name must be at least 3 characters</div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-6">
+                <div class="form-group">
+                  <label class=" " for="newEmployeeSurname">Surname</label>
+                  <input type="text" class="form-control" id="newEmployeeSurname" formControlName="surname"
+                         placeholder="Surname" aria-label="Surname"
+                         [ngClass]="{ 'is-invalid': newEmployeeFormControls.surname.invalid && (newEmployeeFormControls.surname.dirty || newEmployeeFormControls.surname.touched) }">
+
+                  <div
+                    *ngIf="newEmployeeFormControls.surname.invalid && (newEmployeeFormControls.surname.dirty || newEmployeeFormControls.surname.touched)"
+                    class="alert alert-warning">
+                    <div *ngIf="newEmployeeFormControls.surname.errors.required">Surname is required</div>
+                    <div *ngIf="newEmployeeFormControls.surname.errors.pattern">Surname must be at least 3 characters
+                    </div>
+                  </div>
+
+                </div>
+              </div>
+            </div>
+
+            <div class="form-row">
+
+              <div class="form-group col-6">
+
+                <label class=" " for="newEmployeeBirthDate">Date of birth</label>
+                <input id="newEmployeeBirthDate" type="text" class="form-control" placeholder="{{dateFormat}}"
+                       formControlName="dateOfBirth" bsDatepicker aria-label="Date-of-birth"/>
+
+                <small class="form-text text-muted">
+                  Date must be in format: {{dateFormat}}
+                </small>
+              </div>
+
+              <div class="col-6">
+                <div class="form-group">
+                  <label class=" " for="newEmployeePosition">Position</label>
+                  <select class="custom-select form-control" id="newEmployeePosition" formControlName="position">
+                    <option selected>---</option>
+                    <option *ngFor="let position of employeePositions" [value]="position">
+                      {{position}}
+                    </option>
+                  </select>
+                </div>
+              </div>
+
+            </div>
+
+            <div class="form-row justify-content-end">
+              <div class="col-2 text-center float-right">
+                <div class="form-group">
+                  <button type="button" class="btn btn-primary mb-2" [disabled]="newEmployeeForm.invalid"
+                          (click)="addNewEmployee()">Add
+                  </button>
+                </div>
+
+              </div>
+            </div>
+
+          </form>
+
+        </div>
+      </div>
+      <div class="col-1 col-md-2">
+
+        <div class="btn-group-toggle" data-toggle="buttons">
+          <label class="btn border border-primary rounded mb-3" title="Add new Employee">
+            <input type="checkbox" checked="" autocomplete="off" name="addEmployeeBtn"
+                   (change)="showNewEmployeeForm = !showNewEmployeeForm">
+            <span class="icon-add-user"></span>
+          </label>
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+  <div id="employeesSection">
+    <div class="row">
+
+      <form class="col-12 my-2 my-md-0" [formGroup]="employeesForm" novalidate>
+
+        <div id="employees"  class="table-responsive" formArrayName="employees">
+          <table class="table table-bordered table-responsive-md table-striped table-sm text-center">
+            <thead class="thead-dark">
+            <tr>
+              <th class="text-center">Name</th>
+              <th class="text-center">Surname</th>
+              <th class="text-center">Position</th>
+              <th class="text-center">Date of birth</th>
+              <th class="text-center col-2">&nbsp;</th>
+              <!--th class="text-center">&nbsp;</th-->
+            </tr>
+            </thead>
+            <tr *ngFor="let sectionItem of allEmployeesFromForm.controls; let elIndex=index"
+                [formGroupName]="elIndex">
+              <td>
+                <input type="text" class="form-control input-disabled-plaintext"
+                       id="employeeId" formControlName="id" hidden>
+                <input type="text" class="form-control input-disabled-plaintext"
+                       id="employeeName" formControlName="name"
+                       placeholder="Name" aria-label="Name"
+                >
+              </td>
+              <td>
+                <input type="text" class="form-control input-disabled-plaintext"
+                       id="employeeSurname" formControlName="surname"
+                       placeholder="Surname" aria-label="Surname">
+              </td>
+              <td>
+                <select class="custom-select form-control-plaintext" id="employeePosition"
+                        formControlName="position">
+                  <option selected>---</option>
+                  <option *ngFor="let position of employeePositions" [value]="position">
+                    {{position}}
+                  </option>
+                </select>
+              </td>
+              <td>
+                <input type="text" class="form-control input-disabled-plaintext" placeholder="Date of birth"
+                       aria-label="Date-of-birth" bsDatepicker formControlName="dateOfBirth"/>
+              </td>
+              <td>
+
+                <div class="btn-group-toggle" data-toggle="buttons">
+                  <label class="btn p-0 toggle-label-switch">
+                    <input class="toggle-trigger" type="checkbox"  autocomplete="off" (change)="allowEdit(elIndex,$event)">
+                    <span class="btn btn-info toggle-edit p-2" title="Edit row"><span class="icon-edit"></span></span>
+                    <!--span class="btn btn-success toggle-save p-2" title="Save changes"><span class="icon-save"></span></span-->
+                  </label>
+                  <button type="button" class="btn  py-0 px-1" title="Save" [disabled]="(employeesForm.get('employees.' + elIndex).invalid)||(employeesForm.get('employees.' + elIndex).disabled)" (click)="editEmployee(elIndex)">
+                    <span class="btn btn-success toggle-save p-2" title="Save changes"><span class="icon-save"></span></span>
+                  </button>
+
+                  <button type="button" class="btn btn-danger p-2" title="Delete" (click)="deleteEmployee(elIndex)">
+                    <span class="icon-delete"></span>
+                  </button>
+                </div>
+
+              </td>
+            </tr>
+          </table>
+
+          <div class="alert alert-info text-center" role="alert" *ngIf="employeeList.length === 0">
+            There are no employees.
+          </div>
+
+        </div>
+
+      </form>
+
+    </div>
+  </div>
+</section>
