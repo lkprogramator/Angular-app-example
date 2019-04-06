@@ -1,7 +1,7 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 
-import { LogPublisher } from '../model/log-publisher';
-import { LogConsole } from '../model/log-console';
+import {LogPublisher} from '../model/log-publisher';
+import {LogConsole} from '../model/log-console';
 
 @Injectable({
   providedIn: 'root'

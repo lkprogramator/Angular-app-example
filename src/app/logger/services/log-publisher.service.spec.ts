@@ -1,6 +1,6 @@
-import { TestBed } from '@angular/core/testing';
+import {TestBed} from '@angular/core/testing';
 
-import { LogPublisherService } from './log-publisher.service';
+import {LogPublisherService} from './log-publisher.service';
 
 describe('LogPublisherService', () => {
   beforeEach(() => TestBed.configureTestingModule({}));

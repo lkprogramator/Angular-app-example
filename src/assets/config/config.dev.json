@@ -2,6 +2,7 @@
   "api": {
     "url": "http://localhost:3004",
     "employees":"/employees",
+    "employeesParams":"?_sort=surname&_order=asc",
     "logger":"/logger"
   },
   "ibillboardApi": {
@@ -12,5 +13,10 @@
     "logger": true,
     "toConsole": true,
     "toApi": false
+  },
+  "date": {
+    "dateFormat": "DD.MM.YYYY",
+    "employeeAgeTo": 70,
+    "employeeAgeForm": 15
   }
 }

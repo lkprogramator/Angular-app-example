@@ -14,6 +14,7 @@ describe('EmployeeService', () => {
     'api': {
       'url': 'http://localhost:3004',
       'employees': '/employees',
+      'employeesParams': '?_sort=surname&_order=asc',
       'logger': '/logger'
     },
     'ibillboardApi': {
@@ -24,6 +25,11 @@ describe('EmployeeService', () => {
       'logger': true,
       'toConsole': true,
       'toApi': false
+    },
+    'date': {
+      'dateFormat': 'dd.mm.yyyy',
+      'employeeAgeTo': 70,
+      'employeeAgeForm': 15
     }
   };
 
@@ -69,7 +75,7 @@ describe('EmployeeService', () => {
       expect(response).toEqual(employeesResponse);
     });
 
-    const req = httpMock.expectOne(service.employeesUrl);
+    const req = httpMock.expectOne(service.employeesUrl + service.employeesUrlparams);
     expect(req.request.method).toEqual('GET');
 
     req.flush(employeesResponse);
@@ -90,14 +96,13 @@ describe('EmployeeService', () => {
       name: 'Tom',
       surname: 'Jerry',
       position: 'Designer',
-      dateOfBirth: '12.5.1992'
+      dateOfBirth: new Date('Friday, March 1, 2002 12:00:00 AM')
     };
 
     let response;
 
     service.addEmployee(newEmployee).subscribe(employees => {
       response = employees;
-      console.log('add E response: ', response);
       expect(response).toEqual(employeesResponse);
     });
 
@@ -128,7 +133,6 @@ describe('EmployeeService', () => {
 
     service.addEmployee(newEmployee).subscribe(employees => {
       response = employees;
-      console.log('add E response: ', response);
       expect(response).toEqual(employeesResponse);
     });
 
@@ -149,12 +153,10 @@ describe('EmployeeService', () => {
       dateOfBirth: '12.5.1992'
     };
 
-
     let response;
 
     service.updateEmployee(employee).subscribe(updatedEmployee => {
       response = updatedEmployee;
-      console.log('update E response: ', response);
       expect(response).toEqual(employee);
     });
 
@@ -179,7 +181,6 @@ describe('EmployeeService', () => {
 
     service.deleteEmployee(3).subscribe(deletedEmployee => {
       response = deletedEmployee;
-      console.log('update E response: ', response);
       expect(response).toEqual(employee);
     });
 

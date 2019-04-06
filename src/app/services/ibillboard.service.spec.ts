@@ -1,9 +1,9 @@
-import { TestBed } from '@angular/core/testing';
+import {TestBed} from '@angular/core/testing';
 import {HttpClientTestingModule, HttpTestingController} from '@angular/common/http/testing';
-import { of } from 'rxjs';
-import { AppConfig } from './app-config.service';
+import {of} from 'rxjs';
+import {AppConfig} from './app-config.service';
 
-import { IbillboardService } from './ibillboard.service';
+import {IbillboardService} from './ibillboard.service';
 
 describe('IbillboardService', () => {
 
@@ -24,7 +24,13 @@ describe('IbillboardService', () => {
       'logger': true,
       'toConsole': true,
       'toApi': false
-    }};
+    },
+    'date': {
+      'dateFormat': 'dd.mm.yyyy',
+      'employeeAgeTo': 70,
+      'employeeAgeForm': 15
+    }
+  };
 
   beforeEach(() => {
     AppConfig.settings = fakeAppConfigSettings;
@@ -56,7 +62,5 @@ describe('IbillboardService', () => {
 
     expect(response).toEqual(positionsResponse);
   });
-
-
 
 });

@@ -3,5 +3,5 @@ export class Employee {
   name: string;
   surname: string;
   position: string;
-  dateOfBirth: string;
+  dateOfBirth: Date;
 }

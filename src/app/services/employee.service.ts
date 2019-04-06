@@ -18,12 +18,13 @@ const httpOptions = {
 export class EmployeeService {
 
   employeesUrl = AppConfig.settings.api.url + AppConfig.settings.api.employees;
+  employeesUrlparams = AppConfig.settings.api.employeesParams;
 
   constructor(private http: HttpClient, private errorHandler: ErrorHandlerService, private logger: LogService) {
   }
 
   getAllEmployees(): Observable<Employee[]> {
-    return this.http.get<Employee[]>(this.employeesUrl)
+    return this.http.get<Employee[]>(this.employeesUrl + this.employeesUrlparams)
       .pipe(
         tap(_ => this.logger.info('fetched employees')),
         catchError(this.errorHandler.handleError<Employee[]>('getPositions', []))

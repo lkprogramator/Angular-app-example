@@ -28,41 +28,7 @@ describe('AppConfigService', () => {
 
     backend.expectOne(`assets/config/config.dev.json`);
     backend.verify();
-    // expect(AppConfig.settings).toEqual(userResponse);
     done();
-  });
-
-
-  it('tests that async / await works', async () => {
-
-    function resolveAfter2Seconds(x) {
-
-      return new Promise(resolve => {
-
-        setTimeout(() => {
-
-          resolve(x);
-
-        }, 2000);
-
-      });
-
-    }
-
-    async function add1(x) {
-
-      const a = resolveAfter2Seconds(20);
-
-      const b = resolveAfter2Seconds(30);
-
-      return x + await a + await b;
-
-    }
-
-    const v = await add1(10);
-
-    expect(v).toBe(60);
-
   });
 
 });

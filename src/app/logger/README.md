@@ -1,12 +1,18 @@
 
 ## Logger Service
 
-Practical Log service
+Practical Log service.
+
+"currently Logs into console only." 
 
 ### Usage
-  1) import { LogService } from './logger/services/log.service';
-  2) constructor(private logger: LogService)
-  3) values of all types (string, boolean, number, json, object)
+  0) register logger module in **app.module.ts**  
+    * `import { LogService } from './logger/services/log.service'`  
+    * `imports: [ ... LoggerModule,... ],`
+  1) In service / component  
+    * `import { LogService } from './logger/services/log.service'`  
+    * `constructor(private logger: LogService)`
+  2) Log the values of all types (string, boolean, number, json, object)
 
 #### Examples:
 
@@ -37,5 +43,5 @@ Practical Log service
     this.logger.log("Message and All Types test", "another string", 1, 2, true, false, values, product);
 
 ### TODOS
-* Add publisher for sending messages to Api.
+* Add publisher for sending loged messages to Api.
 * Add more tests

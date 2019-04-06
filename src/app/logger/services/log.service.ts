@@ -52,7 +52,7 @@ export class LogService {
   private shouldLog(level: LogLevel): boolean {
     let ret = false;
 
-    if (!environment.production || (level >= this.level && level !== LogLevel.Off) || this.level === LogLevel.All ) {
+    if (!environment.production || (level >= this.level && level !== LogLevel.Off) || this.level === LogLevel.All) {
       ret = true;
     }
 
@@ -71,7 +71,11 @@ export class LogService {
 
       for (const logger of this.publishers) {
         logger.log(entry)
-          .subscribe(response => console.log(response));
+          .subscribe(response => {
+            if (!response) {
+              console.log(response);
+            }
+          });
       }
     }
   }

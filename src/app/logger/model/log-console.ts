@@ -7,7 +7,7 @@ export class LogConsole extends LogPublisher {
 
     console.log(entry.buildLogString());
 
-    return of(true);
+   return of(true);
   }
 
   clear(): Observable<boolean> {
