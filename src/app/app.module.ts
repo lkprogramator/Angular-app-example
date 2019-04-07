@@ -1,6 +1,6 @@
 import {BrowserModule} from '@angular/platform-browser';
 import {NgModule} from '@angular/core';
-import {HttpClientModule, HttpClient} from '@angular/common/http';
+import {HttpClientModule, HttpClient, HTTP_INTERCEPTORS} from '@angular/common/http';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {BsDatepickerModule, BsDatepickerConfig} from 'ngx-bootstrap';
@@ -9,6 +9,10 @@ import {AppConfig} from './services/app-config.service';
 import {LoggerModule} from './logger/logger.module';
 import {CommonComponentsModule} from './common-components/common-components.module';
 import {ToastrNotificationModule} from './toastr-notification/toastr-notification.module';
+import {LoginAuthModule} from './login-auth/login-auth.module';
+
+import {ErrorInterceptor } from './login-auth/interceptors/error-interceptor.service';
+import { JwtInterceptor } from './login-auth/interceptors/jwt-interceptor.service';
 
 import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
@@ -54,7 +58,8 @@ export function getDatepickerConfig(): BsDatepickerConfig {
     ReactiveFormsModule,
     BsDatepickerModule.forRoot(),
     CommonComponentsModule,
-    ToastrNotificationModule
+    ToastrNotificationModule,
+    LoginAuthModule
   ],
   providers: [
     HttpClient,
@@ -64,7 +69,9 @@ export function getDatepickerConfig(): BsDatepickerConfig {
       useFactory: initializeApp,
       deps: [AppConfig], multi: true
     }, NgbModule,
-    {provide: BsDatepickerConfig, useFactory: getDatepickerConfig}],
+    {provide: BsDatepickerConfig, useFactory: getDatepickerConfig},
+    { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
+    { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true }],
   bootstrap: [AppComponent]
 })
 export class AppModule {
