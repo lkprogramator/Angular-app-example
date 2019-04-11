@@ -34,7 +34,7 @@ export function getDatepickerConfig(): BsDatepickerConfig {
     dateInputFormat: dateFormat,
     maxDate: fromDate,
     minDate: toDate,
-    containerClass: 'theme-red'
+    containerClass: 'theme-green'
   });
 }
 
