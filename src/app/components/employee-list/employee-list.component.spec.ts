@@ -82,7 +82,6 @@ describe('EmployeeListComponent', () => {
   /*
     New Employee Form
    */
-  // TODO https://codecraft.tv/courses/angular/unit-testing/model-driven-forms/
   it('new Employee Form invalid when empty', () => {
     expect(component.newEmployeeForm.valid).toBeFalsy();
   });
@@ -111,35 +110,12 @@ describe('EmployeeListComponent', () => {
     expect(name.valid).toBeFalsy();
   });
 
-
-// TODO https://codecraft.tv/courses/angular/unit-testing/model-driven-forms/#_field_errors
   it('Fill form to be valid', async(() => {
     expect(component.newEmployeeForm.valid).toBeFalsy();
     component.newEmployeeForm.controls['name'].setValue('Jack');
     component.newEmployeeForm.controls['surname'].setValue('The ripper');
     component.newEmployeeForm.controls['position'].setValue('boss');
-    // component.newEmployeeForm.controls['dateOfBirth'].setValue(new  Date('Saturday, August 1, 1998 12:00:00 AM'));
-    // component.newEmployeeForm.controls['dateOfBirth'].setValue({year: 1992, month: 10, day: 10});
     component.newEmployeeForm.controls['dateOfBirth'].setValue('2002-03-30T15:42:23.420Z');
-    /*
-        const inputDebugEl = fixture.debugElement.query(By.css('#newEmployeeBirthDate'));
-        inputDebugEl.triggerEventHandler('input', {target: {value: '29-8-2001'}});
-    */
-    /*
-        fixture.whenStable().then(() => {
-          const inputDebugEl = fixture.debugElement.query(By.css('#newEmployeeBirthDate'));
-          console.log('form inputDebugEl', JSON.stringify(inputDebugEl));
-          inputDebugEl.triggerEventHandler('input', {target: {value: '29-8-2001'}});
-
-        });
-    */
-
-    console.log('form valid name', component.newEmployeeForm.controls['name'].valid);
-    console.log('form valid surname', component.newEmployeeForm.controls['surname'].valid);
-    console.log('form valid position', component.newEmployeeForm.controls['position'].valid);
-    console.log('form valid dateOfBirth', component.newEmployeeForm.controls['dateOfBirth'].valid);
-    console.log('form valid dateOfBirth D ', component.newEmployeeForm.controls['dateOfBirth'].value);
-    console.log('form valid dateOfBirth E ', component.newEmployeeForm.controls['dateOfBirth'].errors);
 
     expect(component.newEmployeeForm.valid).toBeTruthy();
 
@@ -151,9 +127,6 @@ describe('EmployeeListComponent', () => {
     component.newEmployeeForm.controls['surname'].setValue('');
     component.newEmployeeForm.controls['position'].setValue('boss');
     expect(component.newEmployeeForm.valid).toBeFalsy();
-
-    // TODO https://codecraft.tv/courses/angular/unit-testing/model-driven-forms/#_field_errors
-    // TODO https://github.com/ng-bootstrap/ng-bootstrap/blob/master/src/datepicker/datepicker-input.spec.ts
   });
 
   /*
@@ -188,9 +161,6 @@ describe('EmployeeListComponent', () => {
 
     expect(component.employeeList).toEqual(fakeEmployeeList);
     expect(component.employeesForm.controls['employees'].value).toEqual(fakeEmployeeList);
-
-    // TODO https://codecraft.tv/courses/angular/unit-testing/model-driven-forms/#_field_errors
-    // TODO https://github.com/ng-bootstrap/ng-bootstrap/blob/master/src/datepicker/datepicker-input.spec.ts
   });
 
   it('should load Employees positions', () => {
@@ -289,29 +259,10 @@ describe('EmployeeListComponent', () => {
     component.newEmployeeForm.controls['surname'].setValue(newEmployee.surname);
     component.newEmployeeForm.controls['position'].setValue(newEmployee.position);
     component.newEmployeeForm.controls['dateOfBirth'].setValue('2002-03-30T15:42:23.420Z');
-    //  new Date('2002-03-30T15:42:23.420Z')
-
-    console.log('form control.valid', component.newEmployeeForm.valid);
-
-    console.log('form valid name', component.newEmployeeForm.controls['name'].valid);
-    console.log('form valid surname', component.newEmployeeForm.controls['surname'].valid);
-    console.log('form valid position', component.newEmployeeForm.controls['position'].valid);
-    console.log('form valid dateOfBirth', component.newEmployeeForm.controls['dateOfBirth'].valid);
-    console.log('form valid dateOfBirth D ', component.newEmployeeForm.controls['dateOfBirth'].value);
-    console.log('form valid dateOfBirth E ', component.newEmployeeForm.controls['dateOfBirth'].errors);
 
     spyOn(employeeService, 'addEmployee').and.returnValue(of(newEmployee));
 
     component.addNewEmployee();
-
-    const control = <FormArray>component.employeesForm.get('employees');
-    // control.push(employeeToEdit);
-    console.log('form edit control.length', control.length);
-    console.log('form edit control raw', control.value);
-    // console.log('form edit control raw 0', control.get('0'));
-
-    const resultFormArray = <FormArray>component.employeesForm.get('employees');
-    console.log('form edit control raw 0', resultFormArray.get('0').value);
 
     expect(component.employeesForm.get('employees.0').value).toEqual(newEmployee);
 
