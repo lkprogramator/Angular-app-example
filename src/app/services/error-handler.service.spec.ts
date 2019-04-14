@@ -1,6 +1,7 @@
 import {TestBed} from '@angular/core/testing';
 
 import {ErrorHandlerService} from './error-handler.service';
+import {LogConfig} from '../logger/model/log-config';
 
 describe('ErrorHandlerService', () => {
 
@@ -10,7 +11,7 @@ describe('ErrorHandlerService', () => {
 
     TestBed.configureTestingModule({
       imports: [],
-      providers: [ErrorHandlerService]
+      providers: [ErrorHandlerService, LogConfig]
     });
 
     service = TestBed.get(ErrorHandlerService);

@@ -4,6 +4,7 @@ import {of} from 'rxjs';
 import {AppConfig} from './app-config.service';
 
 import {IbillboardService} from './ibillboard.service';
+import {LogConfig} from '../logger/model/log-config';
 
 describe('IbillboardService', () => {
 
@@ -13,8 +14,7 @@ describe('IbillboardService', () => {
   const fakeAppConfigSettings = {
     'api': {
       'url': 'http://localhost:3004',
-      'employees': '/employees',
-      'logger': '/logger'
+      'employees': '/employees'
     },
     'ibillboardApi': {
       'url': 'http://ibillboard.com/api',
@@ -36,7 +36,7 @@ describe('IbillboardService', () => {
     AppConfig.settings = fakeAppConfigSettings;
     TestBed.configureTestingModule({
       imports: [HttpClientTestingModule],
-      providers: [IbillboardService]
+      providers: [IbillboardService, LogConfig]
     });
 
     service = TestBed.get(IbillboardService);

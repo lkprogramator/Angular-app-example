@@ -32,7 +32,6 @@ export interface IAppConfig {
     url: string;
     employees: string;
     employeesParams?: string;
-    logger: string;
   };
   ibillboardApi: {
     url: string;
@@ -40,8 +39,10 @@ export interface IAppConfig {
   };
   logging: {
     logger: boolean;
+    logWithDate?: boolean;
     toConsole: boolean;
-    toApi: boolean;
+    toServer?: boolean;
+    serverLoggingUrl?: string;
   };
   date: {
     dateFormat: string;

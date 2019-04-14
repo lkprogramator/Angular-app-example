@@ -42,7 +42,7 @@ export class EmployeeListComponent implements OnInit {
   }
 
   ngOnInit() {
-   // this.loadEmployeePositions();
+    this.loadEmployeePositions();
     this.loadEmployees();
   }
 

@@ -7,6 +7,7 @@ import {BsDatepickerModule, BsDatepickerConfig} from 'ngx-bootstrap';
 import {APP_INITIALIZER} from '@angular/core';
 import {AppConfig} from './services/app-config.service';
 import {LoggerModule} from './logger/logger.module';
+import {LogConfig} from './logger/model/log-config';
 import {CommonComponentsModule} from './common-components/common-components.module';
 import {ToastrNotificationModule} from './toastr-notification/toastr-notification.module';
 
@@ -38,6 +39,15 @@ export function getDatepickerConfig(): BsDatepickerConfig {
   });
 }
 
+export function getLogConfig(): LogConfig {
+  return Object.assign(new LogConfig(), {
+    logger: AppConfig.settings.logging.logger,
+    logWithDate: AppConfig.settings.logging.logWithDate,
+    toConsole: AppConfig.settings.logging.toConsole,
+    toServer: AppConfig.settings.logging.toServer
+  });
+}
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -64,7 +74,7 @@ export function getDatepickerConfig(): BsDatepickerConfig {
       useFactory: initializeApp,
       deps: [AppConfig], multi: true
     }, NgbModule,
-    {provide: BsDatepickerConfig, useFactory: getDatepickerConfig}],
+    {provide: BsDatepickerConfig, useFactory: getDatepickerConfig}, {provide: LogConfig, useFactory: getLogConfig }],
   bootstrap: [AppComponent]
 })
 export class AppModule {

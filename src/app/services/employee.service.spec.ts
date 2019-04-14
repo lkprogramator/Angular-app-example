@@ -4,6 +4,7 @@ import {HttpClientTestingModule, HttpTestingController} from '@angular/common/ht
 import {EmployeeService} from './employee.service';
 import {Employee} from '../model/employee';
 import {AppConfig} from './app-config.service';
+import {LogConfig} from '../logger/model/log-config';
 
 describe('EmployeeService', () => {
 
@@ -23,8 +24,7 @@ describe('EmployeeService', () => {
     },
     'logging': {
       'logger': true,
-      'toConsole': true,
-      'toApi': false
+      'toConsole': true
     },
     'date': {
       'dateFormat': 'dd.mm.yyyy',
@@ -38,7 +38,7 @@ describe('EmployeeService', () => {
     AppConfig.settings = fakeAppConfigSettings;
     TestBed.configureTestingModule({
       imports: [HttpClientTestingModule],
-      providers: [EmployeeService]
+      providers: [EmployeeService, LogConfig]
     });
 
     service = TestBed.get(EmployeeService);

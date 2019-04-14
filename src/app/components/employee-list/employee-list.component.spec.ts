@@ -14,6 +14,7 @@ import {AppConfig} from '../../services/app-config.service';
 import {EmployeeService} from '../../services/employee.service';
 import {IbillboardService} from '../../services/ibillboard.service';
 import {Employee} from '../../model/employee';
+import {LogConfig} from '../../logger/model/log-config';
 
 describe('EmployeeListComponent', () => {
   let component: EmployeeListComponent;
@@ -51,7 +52,7 @@ describe('EmployeeListComponent', () => {
       declarations: [EmployeeListComponent],
       imports: [NgbModule.forRoot(), BsDatepickerModule.forRoot(), ReactiveFormsModule, FormsModule,
         HttpClientTestingModule, RouterTestingModule, CommonComponentsModule],
-      providers: [FormBuilder, NgbModule, EmployeeService, IbillboardService, ConfirmationDialogService]
+      providers: [FormBuilder, NgbModule, EmployeeService, IbillboardService, ConfirmationDialogService, LogConfig]
     })
       .compileComponents();
 

@@ -2,8 +2,7 @@
   "api": {
     "url": "http://localhost:3004",
     "employees":"/employees",
-    "employeesParams":"?_sort=surname&_order=asc",
-    "logger":"/logger"
+    "employeesParams":"?_sort=surname&_order=asc"
   },
   "ibillboardApi": {
     "url": "http://ibillboard.com/api",
@@ -11,8 +10,9 @@
   },
   "logging": {
     "logger": true,
+    "logWithDate": true,
     "toConsole": true,
-    "toApi": false
+    "toServer": false
   },
   "date": {
     "dateFormat": "DD.MM.YYYY",
