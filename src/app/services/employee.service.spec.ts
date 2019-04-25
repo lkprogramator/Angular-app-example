@@ -4,6 +4,7 @@ import {HttpClientTestingModule, HttpTestingController} from '@angular/common/ht
 import {EmployeeService} from './employee.service';
 import {Employee} from '../model/employee';
 import {AppConfig} from './app-config.service';
+import {LogConfig} from '../logger/model/log-config';
 
 describe('EmployeeService', () => {
 
@@ -15,21 +16,26 @@ describe('EmployeeService', () => {
       'url': 'http://localhost:3004',
       'employees': '/employees',
       'employeesParams': '?_sort=surname&_order=asc',
-      'logger': '/logger'
+      'positions': '/positions'
     },
     'ibillboardApi': {
       'url': 'http://ibillboard.com/api',
       'positions': '/positions'
     },
-    'logging': {
+    'logger': {
       'logger': true,
-      'toConsole': true,
-      'toApi': false
+      'toConsole': true
     },
     'date': {
       'dateFormat': 'dd.mm.yyyy',
       'employeeAgeTo': 70,
-      'employeeAgeForm': 15
+      'employeeAgeFrom': 15
+    },
+    'login': {
+      'apiUrl': 'https://example.com:3000/login',
+      'loginPage': '/login',
+      'afterLogin': '/home',
+      'localStorageKey': 'currentUser'
     }
   };
 
@@ -38,7 +44,7 @@ describe('EmployeeService', () => {
     AppConfig.settings = fakeAppConfigSettings;
     TestBed.configureTestingModule({
       imports: [HttpClientTestingModule],
-      providers: [EmployeeService]
+      providers: [EmployeeService, LogConfig]
     });
 
     service = TestBed.get(EmployeeService);

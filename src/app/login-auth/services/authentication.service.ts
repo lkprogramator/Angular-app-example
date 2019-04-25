@@ -1,10 +1,10 @@
-import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { BehaviorSubject, Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
-import { AppConfig } from '../../services/app-config.service';
+import {Injectable} from '@angular/core';
+import {HttpClient} from '@angular/common/http';
+import {BehaviorSubject, Observable} from 'rxjs';
+import {tap} from 'rxjs/operators';
 
-import { User } from '../model/user';
+import {LoginConfig} from '../model/login-config';
+import {User} from '../model/user';
 
 @Injectable({
   providedIn: 'root'
@@ -12,9 +12,10 @@ import { User } from '../model/user';
 export class AuthenticationService {
   private currentUserSubject: BehaviorSubject<User>;
   public currentUser: Observable<User>;
+  public localStorageKey = this.loginConfig.localStorageKey;
 
-  constructor(private http: HttpClient) {
-    this.currentUserSubject = new BehaviorSubject<User>(JSON.parse(localStorage.getItem('currentUser')));
+  constructor(private http: HttpClient, private loginConfig: LoginConfig) {
+    this.currentUserSubject = new BehaviorSubject<User>(JSON.parse(localStorage.getItem(this.localStorageKey)));
     this.currentUser = this.currentUserSubject.asObservable();
   }
 
@@ -22,23 +23,30 @@ export class AuthenticationService {
     return this.currentUserSubject.value;
   }
 
-  login(username: string, password: string) {
-    return this.http.post<any>(`${AppConfig.settings.api.url}/login`, { username, password })
-      .pipe(map(user => {
-        // login successful if there's a jwt token in the response
-        if (user && user.token) {
-          // store user details and jwt token in local storage to keep user logged in between page refreshes
-          localStorage.setItem('currentUser', JSON.stringify(user));
-          this.currentUserSubject.next(user);
-        }
+   login(username: string, password: string) {
 
-        return user;
-      }));
+    return this.http.post<any>(this.loginConfig.apiUrl, {'email': username, 'password': password})
+      .pipe(
+        tap((response) => {
+            if (response && response.accessToken) {
+              const user: User = new User();
+              user.username = username;
+              user.password = password;
+              user.accessToken = response.accessToken;
+
+              localStorage.setItem(this.localStorageKey, JSON.stringify(user));
+              this.currentUserSubject.next(user);
+              return user;
+            }
+
+          }
+        )
+      );
+
   }
 
   logout() {
-    // remove user from local storage to log user out
-    localStorage.removeItem('currentUser');
+    localStorage.removeItem(this.localStorageKey);
     this.currentUserSubject.next(null);
   }
 }

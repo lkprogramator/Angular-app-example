@@ -2,6 +2,7 @@ import {Injectable} from '@angular/core';
 import {LogPublisher} from '../model/log-publisher';
 import {LogLevel} from '../model/log-level.enum';
 import {LogEntry} from '../model/log-entry';
+import {LogConfig} from '../model/log-config';
 import {LogPublisherService} from './log-publisher.service';
 import {environment} from '../../../environments/environment';
 
@@ -10,13 +11,13 @@ import {environment} from '../../../environments/environment';
 })
 export class LogService {
 
-  constructor(private publishersService: LogPublisherService) {
+  constructor(private logConfig: LogConfig, private publishersService: LogPublisherService) {
     this.publishers = this.publishersService.publishers;
   }
 
   publishers: LogPublisher[];
   level: LogLevel = LogLevel.All;
-  logWithDate = true;
+  logWithDate = this.logConfig.logWithDate;
 
   debug(msg: string, ...optionalParams: any[]) {
     this.writeToLog(msg, LogLevel.Debug, optionalParams);

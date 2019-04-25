@@ -1,0 +1,22 @@
+{
+  "api": {
+    "url": "http://localhost:3004",
+    "employees":"/employees",
+    "employeesParams":"?_sort=surname&_order=asc",
+    "logger":"/logger"
+  },
+  "ibillboardApi": {
+    "url": "http://ibillboard.com/api",
+    "positions":"/positions"
+  },
+  "logging": {
+    "logger": false,
+    "toConsole": false,
+    "toApi": false
+  },
+  "date": {
+    "dateFormat": "DD.MM.YYYY",
+    "employeeAgeTo": 70,
+    "employeeAgeForm": 15
+  }
+}

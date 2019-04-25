@@ -1,6 +1,7 @@
 import {TestBed} from '@angular/core/testing';
 
 import {LogService} from './log.service';
+import {LogConfig} from '../model/log-config';
 
 describe('LogService', () => {
 
@@ -10,7 +11,7 @@ describe('LogService', () => {
 
     TestBed.configureTestingModule({
       imports: [],
-      providers: [LogService]
+      providers: [LogService, LogConfig]
     });
 
     service = TestBed.get(LogService);

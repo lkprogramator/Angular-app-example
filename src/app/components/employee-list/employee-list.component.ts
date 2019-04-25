@@ -42,7 +42,7 @@ export class EmployeeListComponent implements OnInit {
   }
 
   ngOnInit() {
-   // this.loadEmployeePositions();
+    this.loadEmployeePositions();
     this.loadEmployees();
   }
 
@@ -50,7 +50,7 @@ export class EmployeeListComponent implements OnInit {
     const positionsObservable = this.ibillboardService.getPositions();
     positionsObservable.subscribe(
       (response: {}) => {
-        if (response['positions']) {
+        if (response['positions'] && response['positions'].length > 0) {
           this.employeePositions = response['positions'];
         }
       },

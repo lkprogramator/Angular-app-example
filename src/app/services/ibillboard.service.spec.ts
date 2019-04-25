@@ -4,6 +4,7 @@ import {of} from 'rxjs';
 import {AppConfig} from './app-config.service';
 
 import {IbillboardService} from './ibillboard.service';
+import {LogConfig} from '../logger/model/log-config';
 
 describe('IbillboardService', () => {
 
@@ -14,13 +15,13 @@ describe('IbillboardService', () => {
     'api': {
       'url': 'http://localhost:3004',
       'employees': '/employees',
-      'logger': '/logger'
+      'positions': '/positions'
     },
     'ibillboardApi': {
       'url': 'http://ibillboard.com/api',
       'positions': '/positions'
     },
-    'logging': {
+    'logger': {
       'logger': true,
       'toConsole': true,
       'toApi': false
@@ -28,7 +29,13 @@ describe('IbillboardService', () => {
     'date': {
       'dateFormat': 'dd.mm.yyyy',
       'employeeAgeTo': 70,
-      'employeeAgeForm': 15
+      'employeeAgeFrom': 15
+    },
+    'login': {
+      'apiUrl': 'https://example.com:3000/login',
+      'loginPage': '/login',
+      'afterLogin': '/home',
+      'localStorageKey': 'currentUser'
     }
   };
 
@@ -36,7 +43,7 @@ describe('IbillboardService', () => {
     AppConfig.settings = fakeAppConfigSettings;
     TestBed.configureTestingModule({
       imports: [HttpClientTestingModule],
-      providers: [IbillboardService]
+      providers: [IbillboardService, LogConfig]
     });
 
     service = TestBed.get(IbillboardService);

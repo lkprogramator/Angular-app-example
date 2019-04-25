@@ -1,12 +1,13 @@
-import { TestBed, tick } from '@angular/core/testing';
+import {TestBed, tick, fakeAsync} from '@angular/core/testing';
 
-import { AuthenticationService } from './authentication.service';
+import {AuthenticationService} from './authentication.service';
 import {HttpClientTestingModule, HttpTestingController} from '@angular/common/http/testing';
 import {AppConfig} from '../../services/app-config.service';
+import {LoginConfig} from '../model/login-config';
 
 describe('AuthenticationService', () => {
 
- let httpMock: HttpTestingController;
+  let httpMock: HttpTestingController;
   let service: AuthenticationService;
 
   const fakeAppConfigSettings = {
@@ -14,13 +15,13 @@ describe('AuthenticationService', () => {
       'url': 'http://localhost:3004',
       'employees': '/employees',
       'employeesParams': '?_sort=surname&_order=asc',
-      'logger': '/logger'
+      'positions': '/positions'
     },
     'ibillboardApi': {
       'url': 'http://ibillboard.com/api',
       'positions': '/positions'
     },
-    'logging': {
+    'logger': {
       'logger': true,
       'toConsole': true,
       'toApi': false
@@ -28,17 +29,30 @@ describe('AuthenticationService', () => {
     'date': {
       'dateFormat': 'dd.mm.yyyy',
       'employeeAgeTo': 70,
-      'employeeAgeForm': 15
+      'employeeAgeFrom': 15
+    },
+    'login': {
+      'apiUrl': 'https://example.com/login',
+      'loginPage': '/login',
+      'afterLogin': '/home',
+      'localStorageKey': 'currentUser'
     }
   };
-
 
   beforeEach(() => {
 
     AppConfig.settings = fakeAppConfigSettings;
+
+    const fakeLoginConfig = {
+      apiUrl: AppConfig.settings.login.apiUrl,
+      loginPage: AppConfig.settings.login.loginPage,
+      afterLogin: AppConfig.settings.login.afterLogin,
+      localStorageKey: AppConfig.settings.login.localStorageKey
+    };
+
     TestBed.configureTestingModule({
       imports: [HttpClientTestingModule],
-      providers: []
+      providers: [{provide: LoginConfig, useValue: fakeLoginConfig}]
     });
 
     service = TestBed.get(AuthenticationService);
@@ -46,41 +60,42 @@ describe('AuthenticationService', () => {
   });
 
 
-
   it('should be created', () => {
-    // const service: AuthenticationService = TestBed.get(AuthenticationService);
     expect(service).toBeTruthy();
   });
 
-  it('should perform login correctly', (done) => {
-   //  const service: AuthenticationService = TestBed.get(AuthenticationService);
+  it('should perform login correctly', fakeAsync(() => {
 
-    // Set up
-    const url = 'https://example.com/login';
+    const loginUrl = AppConfig.settings.login.apiUrl;
+    const email = 'test@example.com';
+    const password = 'testpassword';
+    const token = 'eyJlbWFpbCI6Im9saXZpZXJAbWF.pbC5jb20iLCJpYXQiOjE1NTUzMzI2NjYsImV4cCI.6MTU1NTMzic3ViIjoiMTAwMCJ9';
+
     const responseObject = {
-      success: true,
-      message: 'login was successful'
+      'accessToken': token
     };
-    let response = null;
-    // End Setup
+    const expectedResult = {
+      'email': email,
+      'password': password
+    };
 
-    service.login('test@example.com', 'testpassword').subscribe(
+    service.login(email, password).subscribe(
       (receivedResponse: any) => {
-        response = receivedResponse;
+        expect(receivedResponse).toEqual(responseObject);
       },
-      (error: any) => {}
+      (error: any) => {
+      }
     );
 
-    const requestWrapper = httpMock.expectOne({url: 'https://example.com/login'});
-    requestWrapper.flush(responseObject);
+    const requestWrapper = httpMock.expectOne(loginUrl);
 
     tick();
 
     expect(requestWrapper.request.method).toEqual('POST');
-    expect(response.body).toEqual(responseObject);
-    expect(response.status).toBe(200);
-    done();
-  });
+    expect(requestWrapper.request.body).toEqual(expectedResult);
 
+    requestWrapper.flush(responseObject);
+    httpMock.verify();
+  }));
 
 });

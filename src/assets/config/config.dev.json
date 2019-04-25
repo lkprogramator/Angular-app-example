@@ -3,20 +3,28 @@
     "url": "http://localhost:3004",
     "employees":"/employees",
     "employeesParams":"?_sort=surname&_order=asc",
-    "logger":"/logger"
+    "positions":"/positions"
   },
   "ibillboardApi": {
     "url": "http://ibillboard.com/api",
     "positions":"/positions"
   },
-  "logging": {
+  "logger": {
     "logger": true,
+    "logWithDate": true,
     "toConsole": true,
-    "toApi": false
+    "toServer": false,
+    "serverLoggingUrl": ""
   },
   "date": {
     "dateFormat": "DD.MM.YYYY",
     "employeeAgeTo": 70,
-    "employeeAgeForm": 15
+    "employeeAgeFrom": 15
+  },
+  "login": {
+    "apiUrl": "http://localhost:3004/login",
+    "loginPage": "/login",
+    "afterLogin": "/employees",
+    "localStorageKey": "currentUser"
   }
 }

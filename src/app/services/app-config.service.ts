@@ -16,11 +16,12 @@ export class AppConfig {
     const jsonFile = `assets/config/config.${environment.name}.json`;
 
     return new Promise<void>((resolve, reject) => {
-      this.http.get(jsonFile).toPromise().then((response: IAppConfig) => {
+      this.http.get(jsonFile).toPromise()
+        .then((response: IAppConfig) => {
         AppConfig.settings = <IAppConfig>response;
         resolve();
       }).catch((response: any) => {
-        reject(`Could not load file '${jsonFile}': ${JSON.stringify(response)}`);
+        reject(`Could not load file'${jsonFile}': ${JSON.stringify(response)}`);
       });
     });
   }
@@ -32,20 +33,28 @@ export interface IAppConfig {
     url: string;
     employees: string;
     employeesParams?: string;
-    logger: string;
+    positions: string;
   };
   ibillboardApi: {
     url: string;
     positions: string;
   };
-  logging: {
+  logger: {
     logger: boolean;
+    logWithDate?: boolean;
     toConsole: boolean;
-    toApi: boolean;
+    toServer?: boolean;
+    serverLoggingUrl?: string;
   };
   date: {
     dateFormat: string;
-    employeeAgeForm: number;
+    employeeAgeFrom: number;
     employeeAgeTo: number;
+  };
+  login: {
+    apiUrl: string;
+    loginPage: string;
+    afterLogin: string;
+    localStorageKey: string;
   };
 }
