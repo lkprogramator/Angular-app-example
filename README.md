@@ -40,3 +40,7 @@ Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.
  * Add config class to submodules
     * pass its instance with data from config file as module config
  * Add more tests
+ * Add place holder for employee list
+ * Make Employee list mobile friendly, by replacing action buttons with dropdown
+ * Fix config for all modules (by sharing module)
+    * currenty config file is loaded after configs for modules are called
