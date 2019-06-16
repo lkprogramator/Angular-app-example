@@ -3,7 +3,6 @@ import {FormGroup, FormBuilder, FormArray, Validators} from '@angular/forms';
 import {Employee} from '../../model/employee';
 import {AppConfig} from '../../services/app-config.service';
 import {EmployeeService} from '../../services/employee.service';
-import {IbillboardService} from '../../services/ibillboard.service';
 import {ConfirmationDialogService} from '../../common-components/services/confirmation-dialog.service';
 import {LogService} from '../../logger/services/log.service';
 import {ToastrNotificationService} from '../../toastr-notification/services/toastr-notification.service';
@@ -32,12 +31,12 @@ export class EmployeeListComponent implements OnInit {
     }
   );
 
-  employeePositions = ['full-stack developer', 'front-end developer', 'sw admin', 'help desk', 'scrum master', 'product manager'];
+  employeePositions = [];
 
   showNewEmployeeForm = false;
 
   constructor(private formBuilder: FormBuilder, private employeeService: EmployeeService,
-              private ibillboardService: IbillboardService, private confirmationDialogService: ConfirmationDialogService,
+              private confirmationDialogService: ConfirmationDialogService,
               private logger: LogService, private notificationservice: ToastrNotificationService) {
   }
 
@@ -47,11 +46,11 @@ export class EmployeeListComponent implements OnInit {
   }
 
   loadEmployeePositions() {
-    const positionsObservable = this.ibillboardService.getPositions();
+    const positionsObservable = this.employeeService.getPositions();
     positionsObservable.subscribe(
-      (response: {}) => {
-        if (response['positions'] && response['positions'].length > 0) {
-          this.employeePositions = response['positions'];
+      (response: []) => {
+        if (response) {
+          this.employeePositions = response;
         }
       },
       error => {

@@ -12,7 +12,6 @@ import {EmployeeListComponent} from './employee-list.component';
 
 import {AppConfig} from '../../services/app-config.service';
 import {EmployeeService} from '../../services/employee.service';
-import {IbillboardService} from '../../services/ibillboard.service';
 import {Employee} from '../../model/employee';
 import {LogConfig} from '../../logger/model/log-config';
 
@@ -20,7 +19,6 @@ describe('EmployeeListComponent', () => {
   let component: EmployeeListComponent;
   let fixture: ComponentFixture<EmployeeListComponent>;
   let employeeService: EmployeeService;
-  let ibillboardService: IbillboardService;
   let confirmationDialogService: ConfirmationDialogService;
   let formBuilder: FormBuilder;
 
@@ -58,7 +56,7 @@ describe('EmployeeListComponent', () => {
       declarations: [EmployeeListComponent],
       imports: [NgbModule.forRoot(), BsDatepickerModule.forRoot(), ReactiveFormsModule, FormsModule,
         HttpClientTestingModule, RouterTestingModule, CommonComponentsModule],
-      providers: [FormBuilder, NgbModule, EmployeeService, IbillboardService, ConfirmationDialogService, LogConfig]
+      providers: [FormBuilder, NgbModule, EmployeeService, ConfirmationDialogService, LogConfig]
     })
       .compileComponents();
 
@@ -67,7 +65,6 @@ describe('EmployeeListComponent', () => {
     fixture.detectChanges();
 
     employeeService = TestBed.get(EmployeeService);
-    ibillboardService = TestBed.get(IbillboardService);
     confirmationDialogService = TestBed.get(ConfirmationDialogService);
     formBuilder = TestBed.get(FormBuilder);
 
@@ -172,15 +169,13 @@ describe('EmployeeListComponent', () => {
 
   it('should load Employees positions', () => {
 
-    const employeePositionsResponse = {
-      positions: ['boss', 'full-stack developer', 'front-end developer', 'sw admin', 'help desk', 'scrum master', 'product manager']
-    };
+  const employeePositionsResponse = ['full-stack developer', 'front-end developer', 'help desk', 'scrum master', 'product manager'];
 
-    spyOn(ibillboardService, 'getPositions').and.returnValue(of(employeePositionsResponse));
+    spyOn(employeeService, 'getPositions').and.returnValue(of(employeePositionsResponse));
 
     component.loadEmployeePositions();
 
-    expect(component.employeePositions).toEqual(employeePositionsResponse.positions);
+    expect(component.employeePositions).toEqual(employeePositionsResponse);
 
   });
 
@@ -190,7 +185,7 @@ describe('EmployeeListComponent', () => {
       id: 799,
       name: 'Joe',
       surname: 'Gibbons',
-      position: 'boss',
+      position: 'product manager',
       dateOfBirth: new Date('2002-03-30T15:42:23.420Z')
     };
 
@@ -221,7 +216,7 @@ describe('EmployeeListComponent', () => {
       id: 799,
       name: 'Joe',
       surname: 'Gibbons',
-      position: 'boss',
+      position: 'product manager',
       dateOfBirth: new Date('2002-03-30T15:42:23.420Z')
     };
 
@@ -258,7 +253,7 @@ describe('EmployeeListComponent', () => {
       id: 799,
       name: 'Joe',
       surname: 'Gibbons',
-      position: 'boss',
+      position: 'product manager',
       dateOfBirth: new Date('2002-03-30T15:42:23.420Z')
     };
 

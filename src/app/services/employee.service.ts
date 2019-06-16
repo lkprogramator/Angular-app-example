@@ -17,6 +17,7 @@ const httpOptions = {
 })
 export class EmployeeService {
 
+  positionsUrl = AppConfig.settings.api.url + AppConfig.settings.api.positions;
   employeesUrl = AppConfig.settings.api.url + AppConfig.settings.api.employees;
   employeesUrlparams = AppConfig.settings.api.employeesParams;
 
@@ -27,7 +28,7 @@ export class EmployeeService {
     return this.http.get<Employee[]>(this.employeesUrl + this.employeesUrlparams)
       .pipe(
         tap(_ => this.logger.info('fetched employees')),
-        catchError(this.errorHandler.handleError<Employee[]>('getPositions', []))
+        catchError(this.errorHandler.handleError<Employee[]>('getEmployees', []))
       );
   }
 
@@ -53,6 +54,14 @@ export class EmployeeService {
       tap(_ => this.logger.info(`deleted employee id=${id}`)),
       catchError(this.errorHandler.handleError<Employee>('deleteEmployee'))
     );
+  }
+
+  getPositions(): Observable<String[]> {
+    return this.http.get<String[]>(this.positionsUrl)
+      .pipe(
+        tap(_ => this.logger.info('fetched employees positions')),
+        catchError(this.errorHandler.handleError<String[]>('getPositions', []))
+      );
   }
 
 }

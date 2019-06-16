@@ -22,12 +22,11 @@ import {EmployeeListComponent} from './components/employee-list/employee-list.co
 import {EmployeeViewComponent} from './pages/employee-view/employee-view.component';
 
 export function initializeApp(appConfig: AppConfig) {
-  console.log('config start', JSON.stringify(AppConfig.settings));
   return () => appConfig.load();
 }
 
 export function getDatepickerConfig(): BsDatepickerConfig {
-  console.log('config getDatepickerConfig');
+
   const toDate = new Date();
   const fromDate = new Date();
   const employeeAgeTo = ((AppConfig.settings.date.employeeAgeTo) ? AppConfig.settings.date.employeeAgeTo : 70);
@@ -45,6 +44,8 @@ export function getDatepickerConfig(): BsDatepickerConfig {
   });
 }
 /*
+// LoginConfig is not waiting for APP_INITIALIZER to resolve promise,replaced by use of values
+
 export function getLoginConfig(): LoginConfig {
   console.log('config getLoginConfig', AppConfig.settings.login);
   return Object.assign(new LoginConfig(), {
@@ -56,8 +57,11 @@ export function getLoginConfig(): LoginConfig {
 }
 */
 export function getLoginConfig(): LoginConfig {
-   // console.log('config getLoginConfig', AppConfig.settings.login);
-    console.log('config getLoginConfig');
+
+  if (!AppConfig.settings) {
+    console.log('LoginConfig AppConfig.settings not ready');
+  }
+
   return Object.assign(new LoginConfig(), {
     apiUrl: 'http://localhost:3004/login',
     loginPage: '/login',
@@ -66,7 +70,6 @@ export function getLoginConfig(): LoginConfig {
   });
 }
 
-/*
 export function getLogConfig(): LogConfig {
   console.log('config getLogConfig', AppConfig.settings.logger);
   return Object.assign(new LogConfig(), {
@@ -74,17 +77,6 @@ export function getLogConfig(): LogConfig {
     logWithDate: AppConfig.settings.logger.logWithDate,
     toConsole: AppConfig.settings.logger.toConsole,
     toServer: AppConfig.settings.logger.toServer
-  });
-}
-*/
-export function getLogConfig(): LogConfig {
-  // console.log('config getLogConfig', AppConfig.settings.logger);
-   console.log('config getLogConfig');
-  return Object.assign(new LogConfig(), {
-    logger: true,
-    logWithDate: true,
-    toConsole: true,
-    toServer: false
   });
 }
 
@@ -112,18 +104,13 @@ export function getLogConfig(): LogConfig {
     AppConfig,
     {provide: APP_INITIALIZER, useFactory: initializeApp, deps: [AppConfig], multi: true},
     NgbModule,
-    {provide: BsDatepickerConfig, useFactory: getDatepickerConfig},
+    {provide: BsDatepickerConfig, useFactory: getDatepickerConfig, deps: [AppConfig]},
     {provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true},
     {provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true},
-    {provide: LoginConfig, useFactory: getLoginConfig},
-    {provide: LogConfig, useFactory: getLogConfig}
+    {provide: LoginConfig, useFactory: getLoginConfig, deps: [AppConfig]},
+    {provide: LogConfig, useFactory: getLogConfig, deps: [AppConfig]}
 ],
   bootstrap: [AppComponent]
 })
 export class AppModule {
 }
-
-
-/*
-    {provide: LoginConfig, useFactory: getLoginConfig},
- */
