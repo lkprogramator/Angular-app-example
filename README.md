@@ -7,7 +7,6 @@ Simple Angular example APP
  * CRUD operation for list of employees
  * Logger service
  * Toastr-notification of events
- * Call 2 apis to get data
  * Configuration is loaded from file when app starts
 
 ## Dependency
@@ -18,6 +17,16 @@ Simple Angular example APP
 
 * Set api url in `src/assets/config/config.*.json`
   * alternatively use demo api from `api` folder
+
+* Employee has attributes:
+ 
+`{
+  id: number;
+  name: string;
+  surname: string;
+  position: string;
+  dateOfBirth: Date;
+}`
 
 ### Development server
 
@@ -37,10 +46,6 @@ Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.
  * At least two waves of Refactoring
  * Move Employee components and services into its own module
  * Move ErrorHandlerService into common-components module
- * Add config class to submodules
-    * pass its instance with data from config file as module config
  * Add more tests
  * Add place holder for employee list
- * Make Employee list mobile friendly, by replacing action buttons with dropdown
- * Fix config for all modules (by sharing module)
-    * currenty config file is loaded after configs for modules are called
+ * Make Employee list mobile friendly, by replacing action buttons with dropdown, and change row structure
