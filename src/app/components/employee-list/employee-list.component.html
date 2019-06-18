@@ -1,8 +1,8 @@
 <section class="employee-list">
 
   <div id="newEmployeeSection">
-    <div class="row">
 
+    <div class="row">
       <div class="col-11 col-md-10">
         <div *ngIf="showNewEmployeeForm">
 
@@ -87,7 +87,7 @@
       </div>
       <div class="col-1 col-md-2">
 
-        <div class="btn-group-toggle" data-toggle="buttons">
+        <div class="btn-group-toggle add-employee-btn" data-toggle="buttons">
           <label class="btn border border-primary rounded mb-3" title="Add new Employee">
             <input type="checkbox" checked="" autocomplete="off" name="addEmployeeBtn"
                    (change)="showNewEmployeeForm = !showNewEmployeeForm">
@@ -106,6 +106,100 @@
 
       <form class="col-12 my-2 my-md-0" [formGroup]="employeesForm" novalidate>
 
+        <div class="form-row py-2 bg-secondary text-light">
+          <div class="col-12 col-sm-6 col-lg-2">
+            <h4 class="text-center">Name</h4>
+          </div>
+          <div class="col-12 col-sm-6 col-lg-2">
+            <h4 class="text-center">Surname</h4>
+          </div>
+          <div class="col-12 col-sm-6 col-lg-3">
+            <h4 class="text-center">Date of birth</h4>
+          </div>
+          <div class="col-12 col-sm-6 col-lg-3">
+            <h4 class="text-center">Position</h4>
+          </div>
+
+        </div>
+
+ <div class=" " *ngIf="showPlaceHolders">
+ <div class="form-row" id="employee-placeholder" *ngFor="let placeholderItem of employeePlaceholders">
+          <div class="col-12 col-sm-6 col-lg-2 p-2">
+            <div class="shade-line " >&nbsp;</div>
+          </div>
+          <div class="col-12 col-sm-6 col-lg-2 p-2">
+            <div class=" shade-line" >&nbsp;</div>
+          </div>
+          <div class="col-12 col-sm-6 col-lg-3 p-2">
+            <div class=" shade-line" >&nbsp;</div>
+          </div>
+          <div class="col-12 col-sm-6 col-lg-3 p-2">
+            <div class="shade-line" >&nbsp;</div>
+          </div>
+          <div class="col-12 col-sm-12 col-lg-2 p-2 text-center">
+            <span class="text-center shade-btn">&nbsp;</span>
+            <span class="text-center shade-btn mx-1">&nbsp;</span>
+            <span class="text-center shade-btn">&nbsp;</span>
+          </div>
+ </div>
+ </div>
+
+ <div class="" id="employees" formArrayName="employees">
+
+   <div class="form-row py-2 border" *ngFor="let sectionItem of allEmployeesFromForm.controls; let elIndex=index"
+      [formGroupName]="elIndex">
+
+          <div class="col-12 col-sm-6 col-lg-2 item-cell p-2">
+            <input type="text" class="form-control input-disabled-plaintext"
+                   id="employeeId" formControlName="id" hidden>
+            <input type="text" class="form-control input-disabled-plaintext text-center"
+                   id="employeeName" formControlName="name"
+                   placeholder="Name" aria-label="Name">
+          </div>
+          <div class="col-12 col-sm-6 col-lg-2 item-cell p-2">
+            <input type="text" class="form-control input-disabled-plaintext text-center"
+                   id="employeeSurname" formControlName="surname"
+                   placeholder="Surname" aria-label="Surname">
+          </div>
+     <div class="col-12 col-sm-6 col-lg-3 item-cell p-2">
+       <input type="text" class="form-control input-disabled-plaintext text-center" placeholder="Date of birth"
+              aria-label="Date-of-birth" bsDatepicker formControlName="dateOfBirth"/>
+     </div>
+          <div class="col-12 col-sm-6 col-lg-3 item-cell p-2">
+            <select class="custom-select form-control-plaintext text-center" id="employeePosition"
+                    formControlName="position">
+              <option selected>---</option>
+              <option *ngFor="let position of employeePositions" [value]="position">
+                {{position}}
+              </option>
+            </select>
+          </div>
+          <div class="col-12 col-sm-12 col-lg-2 p-2">
+
+            <div class="btn-group-toggle" data-toggle="buttons">
+              <label class="btn p-0 toggle-label-switch">
+                <input class="toggle-trigger" type="checkbox"  autocomplete="off" (change)="allowEdit(elIndex,$event)">
+                <span class="btn btn-info toggle-edit p-2" title="Edit row"><span class="icon-edit"></span></span>
+              </label>
+              <button type="button" class="btn py-0 px-1" title="Save" [disabled]="(employeesForm.get('employees.' + elIndex).invalid)||(employeesForm.get('employees.' + elIndex).disabled)" (click)="editEmployee(elIndex)">
+                <span class="btn btn-success toggle-save p-2" title="Save changes"><span class="icon-save"></span></span>
+              </button>
+
+              <button type="button" class="btn btn-danger p-2" title="Delete" (click)="deleteEmployee(elIndex)">
+                <span class="icon-delete"></span>
+              </button>
+            </div>
+
+          </div>
+</div>
+</div>
+   <div class="col-12" *ngIf="employeeList.length === 0&&!showPlaceHolders">
+        <div class="alert alert-info text-center" role="alert" >
+          There are no employees.
+        </div>
+   </div>
+
+<!--
         <div id="employees"  class="table-responsive" formArrayName="employees">
           <table class="table table-bordered table-responsive-md table-striped table-sm text-center">
             <thead class="thead-dark">
@@ -115,7 +209,6 @@
               <th class="text-center">Position</th>
               <th class="text-center">Date of birth</th>
               <th class="text-center col-2">&nbsp;</th>
-              <!--th class="text-center">&nbsp;</th-->
             </tr>
             </thead>
             <tr *ngFor="let sectionItem of allEmployeesFromForm.controls; let elIndex=index"
@@ -152,7 +245,6 @@
                   <label class="btn p-0 toggle-label-switch">
                     <input class="toggle-trigger" type="checkbox"  autocomplete="off" (change)="allowEdit(elIndex,$event)">
                     <span class="btn btn-info toggle-edit p-2" title="Edit row"><span class="icon-edit"></span></span>
-                    <!--span class="btn btn-success toggle-save p-2" title="Save changes"><span class="icon-save"></span></span-->
                   </label>
                   <button type="button" class="btn  py-0 px-1" title="Save" [disabled]="(employeesForm.get('employees.' + elIndex).invalid)||(employeesForm.get('employees.' + elIndex).disabled)" (click)="editEmployee(elIndex)">
                     <span class="btn btn-success toggle-save p-2" title="Save changes"><span class="icon-save"></span></span>
@@ -172,7 +264,7 @@
           </div>
 
         </div>
-
+-->
       </form>
 
     </div>

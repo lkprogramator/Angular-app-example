@@ -6,6 +6,7 @@ Simple Angular example APP
 
  * CRUD operation for list of employees
  * Logger service
+ * Login with JWT access token
  * Toastr-notification of events
  * Configuration is loaded from file when app starts
 
@@ -16,21 +17,37 @@ Simple Angular example APP
 ## To Use
 
 * Set api url in `src/assets/config/config.*.json`
-  * alternatively use demo api from `api` folder
 
-* Employee has attributes:
- 
-`{
-  id: number;
-  name: string;
-  surname: string;
-  position: string;
-  dateOfBirth: Date;
-}`
+### Demo api
+  * demo api is located in `api` folder
+    * unzip and follow Readme.md
+
+### Login
+
+**`Email`** and **`password`** are required, of course.
+
+If demo api from `api` folder is used, email and password from example should work.
+
+```http
+POST /login
+{
+  "email": "testUser@mail.com",
+  "password": "testUser666"
+}
+```
+
+The response contains the JWT access token (expiration time of 1 hour) :
+
+```http
+200 OK
+{
+  "accessToken": "xxx.xxx.xxx"
+}
+```
 
 ### Development server
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`.
 
 ### Build
 
@@ -47,5 +64,4 @@ Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.
  * Move Employee components and services into its own module
  * Move ErrorHandlerService into common-components module
  * Add more tests
- * Add place holder for employee list
- * Make Employee list mobile friendly, by replacing action buttons with dropdown, and change row structure
+ * Add registration

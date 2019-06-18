@@ -56,5 +56,34 @@ div#employees tbody tr td input:disabled.form-control.input-disabled-plaintext {
 }
 
 
+div#employees div.item-cell input:disabled.form-control.input-disabled-plaintext {
+  display: block;
+  width: 100%;
+  padding-top: .375rem;
+  padding-bottom: .375rem;
+  margin-bottom: 0;
+  line-height: 1.5;
+  color: #212529;
+  background-color: transparent;
+  border: solid transparent;
+  border-width: 1px 0;
+}
 
+div#employees .form-row:nth-child(odd) {
+  background-color: rgba(0,0,0,.05);
+}
 
+div#employee-placeholder .shade-line {
+  background-color: #909CA5; line-height: 42px;
+}
+
+div#employee-placeholder .shade-btn {
+  display: inline-block;
+  background-color: #909CA5;
+  width: 42px;
+  height: 42px;
+}
+
+.newEmployeeSection .add-employee-btn {
+  cursor: grabbing;
+}

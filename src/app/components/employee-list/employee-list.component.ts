@@ -16,6 +16,9 @@ export class EmployeeListComponent implements OnInit {
 
   dateFormat = AppConfig.settings.date.dateFormat;
 
+  showPlaceHolders = true;
+  numberOfPlaceHolders = 5;
+  employeePlaceholders: string[] = new Array(this.numberOfPlaceHolders).fill('placeholder');
   employeeList: Employee[] = [];
 
   employeesForm = new FormGroup({
@@ -73,6 +76,7 @@ export class EmployeeListComponent implements OnInit {
         this.notificationservice.error('The list of Employees is currently not available, try refresh the page.');
       },
       () => {
+        this.showPlaceHolders = false;
         this.logger.info('fetched all employees is complete');
       }
     );
